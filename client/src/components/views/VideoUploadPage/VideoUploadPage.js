@@ -74,7 +74,7 @@ export default function VideoUploadPage() {
 
                                 
                                 console.log(response.data.filePath)
-                                setThumbnailPath("http://localhost:5000/"+response.data.filePath);
+                                setThumbnailPath(response.data.filePath);
                                 
                             
                             }else { 
@@ -100,7 +100,7 @@ const variables = {
     thumbnail: thumbnailPath,
 }
 
-    Axios.post('api/video/uploadVideo', variables)
+    Axios.post('/api/video/uploadVideo', variables)
     .then(response => {
         if(response.data.success){
             console.log(response.data);
@@ -117,7 +117,7 @@ const variables = {
                 <Title level = {2}>Upload Video</Title>
             </div>
 
-            <Form onSubmit = { onSubmit}>
+            <Form onSubmit = { onSubmit }>
                 <div style = {{ display : 'flex', justifyContent: 'space-between'}}>
                 <Dropzone
                  onDrop = { onDrop }
@@ -135,7 +135,7 @@ const variables = {
 
             {thumbnailPath &&
             <div>
-                <img src={ thumbnailPath } alt ="thumbnail" />
+                <img src= {`http://localhost:5000/${thumbnailPath}`} alt ="thumbnail" />
             </div>
             }
             </div>
