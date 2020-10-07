@@ -21,7 +21,7 @@ const CategoryOptions = [
 
 ]
 
-export default function VideoUploadPage() {
+export default function VideoUploadPage(props) {
     const user = useSelector(state => state.user);
     const [VideoTitle, setVideoTitle] = useState("")
     const [Description, setDescription] = useState("")
@@ -70,8 +70,7 @@ export default function VideoUploadPage() {
                                console.log(response.data.fileDuration);
                                 setDuration(response.data.fileDuration);
 
-             
-
+            
                                 
                                 console.log(response.data.filePath)
                                 setThumbnailPath(response.data.filePath);
@@ -108,6 +107,7 @@ const variables = {
             alert('비디오 업로드에 실패했습니다')
         }
     })
+    props.history.push('/')
 }
 
 
@@ -135,7 +135,7 @@ const variables = {
 
             {thumbnailPath &&
             <div>
-                <img src= {`http://localhost:5000/${thumbnailPath}`} alt ="thumbnail" />
+                <img src= {`http://localhost:5000/${ thumbnailPath }`} alt ="thumbnail" />
             </div>
             }
             </div>

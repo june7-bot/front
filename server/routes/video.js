@@ -5,7 +5,7 @@ const { Video } = require("../models/Video");
 const { auth } = require("../middleware/auth");
 const multer = require("multer")
 var ffmpeg = require("fluent-ffmpeg");
-const { default: VideoDetailPage } = require('../../client/src/components/views/VideoDetailPage/VideoDetailPage');
+//const { default: VideoDetailPage } = require('../../client/src/components/views/VideoDetailPage/VideoDetailPage');
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "uploads/");
@@ -22,8 +22,6 @@ let storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage : storage}).single("file");
-
-
 
 router.post('/uploadfiles', (req, res) => {
 
@@ -58,15 +56,14 @@ router.post('/getVideos', (req, res) => {
     })
  })
  
-
  
 router.post('/getVideoDetail', (req, res) => {
 
-    Video.findOne({ "_id" : req.body.postId })
+    Video.findOne({"_id" : req.body.videoId })
     .populate('writer')
-    .exec((err, VideoDetail) => {
-        if(err) return res.status(400).send(err)
-        return res.status(200).json({success : true , VideoDetail})
+    .exec((err, videoDetail) => {
+        if(err) {return res.status(400).send(err)}
+        return res.status(200).json({success : true , videoDetail})
     })
    
  })

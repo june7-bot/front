@@ -1,5 +1,4 @@
 import React, { useState , useEffect } from 'react'
-import { FaCode } from "react-icons/fa";
 import { Card, Icon, Avatar, Col, Typography, Row} from 'antd';
 import Axios from 'axios';
 import moment from 'moment';
@@ -30,7 +29,7 @@ const renderCards = Videos.map((video, index) => {
     return <Col lg={6} md={8} xs={24}>
         <div style={{ position: 'relative' }}>
             <a href={`/video/${video._id}`} >
-            <img style={{ width: '100%' }} alt="thumbnail" src={`${video.thumbnail}`} />
+            <img style={{ width: '100%' }} alt="thumbnail" src={`http://localhost:5000/${video.thumbnail}`} />
             <div className=" duration"
                 style={{ bottom: 0, right:0, position: 'absolute', margin: '4px', 
                 color: '#fff', backgroundColor: 'rgba(17, 17, 17, 0.8)', opacity: 0.8, 
@@ -44,11 +43,11 @@ const renderCards = Videos.map((video, index) => {
             avatar={
                 <Avatar src={video.writer.image} />
             }
-            title={video.title}
+            title={video.title} 
         />
         <span>{video.writer.name} </span><br />
         <span style={{ marginLeft: '3rem' }}> {video.views}</span>
-        - <span> {moment(video.createdAt).format("MMM Do YY")} </span>
+       - <span> {moment(video.createdAt).format("MMM Do YY")} </span>
     </Col>
 
 })
