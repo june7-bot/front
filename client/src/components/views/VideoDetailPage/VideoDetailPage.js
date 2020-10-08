@@ -3,14 +3,16 @@ import { Row, Col, List, Avatar } from 'antd'
 import Axios from 'axios'
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
-
+import Comment from './Sections/Comment'
 
 export default function VideoDetailPage(props) {
 
-const [VideoDetail, setVideoDetail] = useState([])
+    const videoId = props.match.params.videoId;
+    const variable = { videoId : videoId }
 
-const videoId = props.match.params.videoId;
-const variable = { videoId: videoId }
+    const [VideoDetail, setVideoDetail] = useState([])
+    const [Comments, setComments] = useState([])
+
     
 useEffect(() => {
 
@@ -22,17 +24,35 @@ useEffect(() => {
               alert('비디오 정보 가져오기 실패')
           }
       })
+
+      Axios.post('/api/comment/getComments', variable)
+      .then(response => {
+          if(response.data.success){
+            setComments(response.data.comments)
+            console.log(Comments);
+          }else{
+              alert('코멘트 가져오는거 실패')
+          }
+      })
+  
     }, [])
 
+    const refreshFunction = (newComment) =>{
+        setComments(Comments.concat(newComment))
+    }
+
     if(VideoDetail.writer){
-    return (
+
+       const subscribeButton = VideoDetail.writer._id !== localStorage.getItem('userId') && <Subscribe userTo = {VideoDetail.writer._id} userFrom={localStorage.getItem('userId')}/>
+
+       return (
         <Row>
         <Col lg={18} xs={24}>
         <div  style = {{ width: '100%', padding: '3rem 4rem'}}>
             <video style={{width: '100%'}} src = {`http://localhost:5000/${VideoDetail.filePath}`}  controls />
 
     <List.Item
-            actions = {[<Subscribe userTo = {VideoDetail.writer._id} />]}
+            actions = {[ subscribeButton ]}
             >
 
     <List.Item.Meta
@@ -41,6 +61,11 @@ useEffect(() => {
         description = {VideoDetail.description} />
 
     </List.Item>
+
+
+    <Comment refreshFunction = { refreshFunction } commentLists = { Comments } postId = { videoId }/>
+
+
         </div>
         </Col>
         <Col lg = {6} xs = { 24} >

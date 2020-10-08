@@ -13,6 +13,6 @@ const subsriberSchema = mongoose.Schema({
     
 }, { timestamps: true}) 
 
-const Video = mongoose.model('Subcriber', subsriberSchema);
+const Subscriber = mongoose.model('Subcriber', subsriberSchema);
 
-module.exports = { Video }
+module.exports = { Subscriber }
