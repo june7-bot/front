@@ -4,7 +4,7 @@ import Axios from 'axios'
 import SideVideo from './Sections/SideVideo'
 import Subscribe from './Sections/Subscribe'
 import Comment from './Sections/Comment'
-
+import LikeDislikes from './Sections/LikeDislikes'
 export default function VideoDetailPage(props) {
 
     const videoId = props.match.params.videoId;
@@ -29,7 +29,7 @@ useEffect(() => {
       .then(response => {
           if(response.data.success){
             setComments(response.data.comments)
-            console.log(Comments);
+          
           }else{
               alert('코멘트 가져오는거 실패')
           }
@@ -52,7 +52,7 @@ useEffect(() => {
             <video style={{width: '100%'}} src = {`http://localhost:5000/${VideoDetail.filePath}`}  controls />
 
     <List.Item
-            actions = {[ subscribeButton ]}
+            actions = {[ < LikeDislikes video userId = {localStorage.getItem('userId')} videoId = { videoId } />, subscribeButton ]}
             >
 
     <List.Item.Meta
